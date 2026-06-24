@@ -3,3 +3,5 @@
 *.bashrc
 *.profile
 *.sudo_as_admin_successful
+*.gitconfig
+local/
