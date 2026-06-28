@@ -20,4 +20,3 @@ RUN chmod 777 launch.sh
 EXPOSE 80 443
 
 ENTRYPOINT ["./launch.sh"]
-
