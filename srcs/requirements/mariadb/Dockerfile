@@ -2,11 +2,11 @@ FROM debian:bookworm-slim
 
 RUN apt update -y
 RUN apt upgrade -y
-RUN apt install -y mariadb-server
-RUN chmod ugo+x launch.sh
+RUN apt install -y mariadb-server mariadb-client galera-4
+RUN apt-get install -y systemd systemd-sysv 
 
-COPY launch.sh launch.sh
+COPY launch_maria_db.sh launch_maria_db.sh
 
-EXPOSE 3306
+RUN chmod u+x launch_maria_db.sh
 
-ENTRYPOINT ["./launch.sh"]
+ENTRYPOINT ["./launch_maria_db.sh"]

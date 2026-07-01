@@ -7,16 +7,15 @@ services:
       - "443:443"
     build: ./requirements/nginx 
 
-  wordpress:
-    image: wordpress-image
-    container_name: wordpress-container
-    ports:
-      - "9000:9000"
-    build: ./requirements/wordpress
-    command: docker volume create wordpress-volume
-
-    mariaDB:
-      image: mariaDB-image
-      container_name: mariaDB-container
-      ports: "3306:3306"
-      build: ./requirements/mariadb
+  # wordpress:
+  #   image: wordpress-image
+  #   container_name: wordpress-container
+  #   ports:
+  #     - "9000:9000"
+  #   build: ./requirements/wordpress
+  #   command: docker volume create wordpress-volume
+  
+  mariaDB:
+     image: mariadb-image
+     container_name: mariaDB-container
+     build: ./requirements/mariadb
