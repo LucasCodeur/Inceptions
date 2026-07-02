@@ -1,12 +1,10 @@
 services:
-
   nginx:
     image: nginx-image
     container_name: nginx-container
     ports:
       - "443:443"
     build: ./requirements/nginx 
-
   # wordpress:
   #   image: wordpress-image
   #   container_name: wordpress-container
@@ -14,16 +12,30 @@ services:
   #     - "9000:9000"
   #   build: ./requirements/wordpress
   #   command: docker volume create wordpress-volume
-  
   mariaDB:
      image: mariadb-image
      container_name: mariadb-container
      build: ./requirements/mariadb
-     # volumes:
-     #   - mariadb-data:/var/lib/mysql
+     volumes:
+       - mariadb-volume:/var/lib/mysql
      environment:
-       - MARIADB_ROOT_PASSWORD=my-secret-pw
+       - MARIADB_ROOT_PASSWORD=lud-adam
+       - MARIADB_DATABASE=mydb
+       - MARIADB_USER=myuser
+       - MARIADB_PASSWORD=lud-adam
      ports:
        - "4444:3306"
+
 volumes:
-  mariadb-data:
+  mariadb-volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/lud-adam/data/mariadb-volume
+  wordpress-volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/lud-adam/data/wordpress-volume

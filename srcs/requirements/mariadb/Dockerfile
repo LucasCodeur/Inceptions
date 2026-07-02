@@ -1,7 +1,6 @@
 FROM debian:bookworm-slim
 
 RUN	apt update && \
-	echo "coucou" && \
 	apt upgrade -y && \
 	apt install -y mariadb-server && \
 	rm -fr /var/lib/apt/lists/*
