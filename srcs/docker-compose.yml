@@ -17,5 +17,13 @@ services:
   
   mariaDB:
      image: mariadb-image
-     container_name: mariaDB-container
+     container_name: mariadb-container
      build: ./requirements/mariadb
+     # volumes:
+     #   - mariadb-data:/var/lib/mysql
+     environment:
+       - MARIADB_ROOT_PASSWORD=my-secret-pw
+     ports:
+       - "4444:3306"
+volumes:
+  mariadb-data:

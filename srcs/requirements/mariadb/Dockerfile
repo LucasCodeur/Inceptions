@@ -1,12 +1,14 @@
 FROM debian:bookworm-slim
 
-RUN apt update -y
-RUN apt upgrade -y
-RUN apt install -y mariadb-server mariadb-client galera-4
-RUN apt-get install -y systemd systemd-sysv 
+RUN	apt update && \
+	echo "coucou" && \
+	apt upgrade -y && \
+	apt install -y mariadb-server && \
+	rm -fr /var/lib/apt/lists/*
 
-COPY launch_maria_db.sh launch_maria_db.sh
+COPY launch_mariadb.sh launch_mariadb.sh
+RUN chmod +x launch_mariadb.sh
 
-RUN chmod u+x launch_maria_db.sh
-
-ENTRYPOINT ["./launch_maria_db.sh"]
+EXPOSE 3306
+CMD ["mysqld"]
+ENTRYPOINT ["./launch_mariadb.sh"]
