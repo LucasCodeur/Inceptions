@@ -10,4 +10,4 @@ COPY launch.sh launch.sh
 
 EXPOSE 9000
 
-# ENTRYPOINT ["./launch.sh"]
+ENTRYPOINT ["./launch.sh"]
