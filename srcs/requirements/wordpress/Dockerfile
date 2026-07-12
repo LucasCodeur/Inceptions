@@ -3,13 +3,11 @@ FROM debian:bookworm-slim
 RUN apt update -y
 RUN apt upgrade -y
 RUN apt install php php-fpm php-mysql php-xml php-curl php-gd php-mbstring php-zip -y
-RUN 	apt install wordpress -y && \
-	mkdir -p /var/www/html/sample.com && \
-	cd /tmp && \
-	wget https://wordpress.org/latest.tar.gz && \
-	tar xf latest.tar.gz && \
-	mv /tmp/wordpress/* /var/www/html/sample.com/ && \
-	chown -R www-data: /var/www/html/sample.com && \
+RUN apt install zip -y
+RUN apt install wget -y
+RUN apt install curl -y
+RUN wget https://fr.wordpress.org/wordpress-latest-fr_FR.zip
+RUN unzip wordpress-latest-fr_FR.zip -d /var/www 
 
 COPY launch.sh launch.sh
 
