@@ -1,3 +1,3 @@
 #!/bin/bash
 
-exec /usr/sbin/php-fmp -F
+exec php-fpm8.2 -F
