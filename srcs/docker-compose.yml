@@ -15,6 +15,8 @@ services:
     command: docker volume create wordpress-volume
     volumes:
       - wordpress-volume:/var/www/html
+    depends_on:
+      - mariaDB
 
   mariaDB:
      image: mariadb-image

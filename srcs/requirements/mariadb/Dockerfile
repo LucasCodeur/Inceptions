@@ -9,5 +9,4 @@ COPY launch_mariadb.sh launch_mariadb.sh
 RUN chmod +x launch_mariadb.sh
 
 EXPOSE 3306
-CMD ["mysqld"]
 ENTRYPOINT ["./launch_mariadb.sh"]
