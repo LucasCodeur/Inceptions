@@ -11,12 +11,9 @@ RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 RUN chown root:root /usr/local/bin/wp
 RUN wp --info
-# RUN wp core download --path=wpclidemo.dev
-# RUN cd wpclidemo.dev
-# RUN wp config create --dbname=wpclidemo --dbuser=root --prompt=dbpass
-# RUN wp db create
-# RUN wp core install --url=wpclidemo.dev --title="WP-CLI" --admin_user=wpcli --admin_password=wpcli --admin_email=info@wp-cli.org
-# RUN wp plugin update --all
+RUN sudo mkdir -p /var/www/html
+RUN cd /var/www/html
+RUN sudo wp core download --allow-root
 
 COPY launch.sh launch.sh
 
