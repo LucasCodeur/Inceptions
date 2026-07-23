@@ -1,16 +1,27 @@
 services:
   nginx:
     image: nginx-image
+    networks:
+      - inceptions
     container_name: nginx-container
     ports:
       - "443:443"
     build: ./requirements/nginx 
+    volumes:
+      - wordpress-volume:/var/www/html
 
   wordpress:
     image: wordpress-image
+    networks:
+      - inceptions
     container_name: wordpress-container
     ports:
       - "9000:9000"
+    environment:
+      WORDPRESS_DB_HOST: mariaDB:${PORT_DB_TO_WORDPRESS}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${PASSWORD}
+      WORDPRESS_DB_NAME: ${DB_NAME}
     build: ./requirements/wordpress
     command: docker volume create wordpress-volume
     volumes:
@@ -20,15 +31,17 @@ services:
 
   mariaDB:
      image: mariadb-image
+     networks:
+       - inceptions
      container_name: mariadb-container
      build: ./requirements/mariadb
      volumes:
        - mariadb-volume:/var/lib/mysql
      environment:
-       - MARIADB_ROOT_PASSWORD=lud-adam
-       - MARIADB_DATABASE=mydb
-       - MARIADB_USER=myuser
-       - MARIADB_PASSWORD=lud-adam
+       - MARIADB_ROOT_PASSWORD= ${ROOT_PASS}
+       - MARIADB_DATABASE= ${DB_NAME}
+       - MARIADB_USER= ${DB_USER}
+       - MARIADB_PASSWORD= ${PASSWORD}
      ports:
        - "4444:3306"
 
@@ -45,3 +58,6 @@ volumes:
       type: none
       o: bind
       device: /home/lud-adam/data/wordpress-volume
+
+networks:
+  inceptions:

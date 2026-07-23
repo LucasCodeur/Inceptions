@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -e
+# set -e
 
 mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld /var/lib/mysql
