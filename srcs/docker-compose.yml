@@ -15,10 +15,8 @@ services:
     networks:
       - inceptions
     container_name: wordpress-container
-    ports:
-      - "9000:9000"
     environment:
-      WORDPRESS_DB_HOST: mariaDB:${PORT_DB_TO_WORDPRESS}
+      WORDPRESS_DB_HOST: dbhost
       WORDPRESS_DB_USER: ${DB_USER}
       WORDPRESS_DB_PASSWORD: ${PASSWORD}
       WORDPRESS_DB_NAME: ${DB_NAME}
@@ -38,12 +36,10 @@ services:
      volumes:
        - mariadb-volume:/var/lib/mysql
      environment:
-       - MARIADB_ROOT_PASSWORD= ${ROOT_PASS}
-       - MARIADB_DATABASE= ${DB_NAME}
-       - MARIADB_USER= ${DB_USER}
-       - MARIADB_PASSWORD= ${PASSWORD}
-     ports:
-       - "4444:3306"
+       MYSQL_DATABASE: ${DB_NAME}
+       MYSQL_USER: ${DB_USER}
+       MYSQL_PASSWORD: ${PASSWORD}
+       MYSQL_ROOT_PASSWORD: ${ROOT_PASS}
 
 volumes:
   mariadb-volume:

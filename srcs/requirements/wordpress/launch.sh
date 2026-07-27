@@ -8,23 +8,20 @@ mv wp-cli.phar /usr/local/bin/wp
 chown root:root /usr/local/bin/wp
 wp --info
 
-# Your database credentials
-DBNAME=[dbname]
-DBUSER=[dbuser]
-DBPASS=[dbpass]
-DBHOST=[dbhost]
- 
-# Your next wordpress site credentials
-WPUSER=[wpuser]
-WPPASS=[wppass]
-WPEMAIL=[wpemail]
-WPURL=[wpurl]
-WPTITLE=[wptitle]
+DBNAME="$WORDPRESS_DB_NAME"
+DBUSER="$WORDPRESS_DB_USER"
+DBPASS="$WORDPRESS_DB_PASSWORD"
+DBHOST="$WORDPRESS_DB_HOST"
  
 # 1) Download WordPress
 echo 'Downloading WordPress'
 wp core download --allow-root
  
+echo "Waiting for MariaDB..."
+until nc -z "$DBHOST" 3306; do
+    sleep 2
+done
+
 # 2) Generate wp-config.php / Setting DB
 echo 'Creating wp-config.php'
 wp config create --dbname=$DBNAME --dbuser=$DBUSER --dbpass=$DBPASS --dbhost=$DBHOST --allow-root

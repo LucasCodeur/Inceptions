@@ -6,6 +6,7 @@ RUN apt install php php-fpm php-mysql php-curl php-imagick php-mbstring php-xml 
 RUN apt install zip -y
 RUN apt install wget -y
 RUN apt install curl -y
+RUN apt install netcat-openbsd -y
 
 COPY launch.sh launch.sh
 
