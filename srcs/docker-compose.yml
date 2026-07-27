@@ -16,7 +16,7 @@ services:
       - inceptions
     container_name: wordpress-container
     environment:
-      WORDPRESS_DB_HOST: dbhost
+      WORDPRESS_DB_HOST: mariadb:3306
       WORDPRESS_DB_USER: ${DB_USER}
       WORDPRESS_DB_PASSWORD: ${PASSWORD}
       WORDPRESS_DB_NAME: ${DB_NAME}
@@ -25,9 +25,9 @@ services:
     volumes:
       - wordpress-volume:/var/www/html
     depends_on:
-      - mariaDB
+      - mariadb
 
-  mariaDB:
+  mariadb:
      image: mariadb-image
      networks:
        - inceptions

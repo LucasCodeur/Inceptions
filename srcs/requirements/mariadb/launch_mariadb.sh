@@ -1,21 +1,10 @@
 #!/bin/sh
 
-# set -e
+set -e
 
 mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld /var/lib/mysql
-
-# if [ ! -d /var/lib/mysql/mysql ]; then
-#     mariadb-install-db \
-#         --user=mysql \
-#         --basedir=/usr \
-#         --datadir=/var/lib/mysql
-# fi
-#
-# CREATE DATABASE wordpress_db DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-# CREATE USER 'lud-adam'@'localhost' IDENTIFIED BY 'lud-adam';
-# GRANT ALL PRIVILEGES ON wordpress_db.* TO 'lud-adam'@'localhost';
-# FLUSH PRIVILEGES;
-# EXIT;
+apt update -y && apt upgrade -y
 
 exec mariadbd --user=mysql --console
+# echo -e "[mysqld] \nbind-address = 0.0.0.0\nport = 3306" > /etc/mysql/mariadb.cnf
