@@ -1,10 +1,16 @@
 #!/bin/sh
 
-set -e
+service mariadb start
 
-mkdir -p /run/mysqld
-chown -R mysql:mysql /run/mysqld /var/lib/mysql
-apt update -y && apt upgrade -y
+sleep 5
+echo "DB_NAME=$DB_NAME"
+echo "DB_USER=$DB_USER"
+echo "PASSWORD=$PASSWORD"
+mariadb -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"
+mariadb -e "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$PASSWORD';"
+mariadb -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%';"
+mariadb -e "FLUSH PRIVILEGES;"
 
-exec mariadbd --user=mysql --console
-# echo -e "[mysqld] \nbind-address = 0.0.0.0\nport = 3306" > /etc/mysql/mariadb.cnf
+service mariadb stop
+
+exec mysqld_safe

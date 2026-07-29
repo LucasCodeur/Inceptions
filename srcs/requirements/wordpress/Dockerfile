@@ -7,6 +7,9 @@ RUN apt install zip -y
 RUN apt install wget -y
 RUN apt install curl -y
 RUN apt install netcat-openbsd -y
+RUN apt install mariadb-client -y
+
+COPY conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
 COPY launch.sh launch.sh
 

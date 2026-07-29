@@ -3,36 +3,41 @@ services:
     image: nginx-image
     networks:
       - inceptions
-    container_name: nginx-container
+    container_name: nginx
     ports:
       - "443:443"
     build: ./requirements/nginx 
+    env_file:
+      - .env
     volumes:
       - wordpress-volume:/var/www/html
-
+    depends_on:
+      - wordpress
   wordpress:
     image: wordpress-image
     networks:
       - inceptions
-    container_name: wordpress-container
+    container_name: wordpress
     environment:
       WORDPRESS_DB_HOST: mariadb:3306
       WORDPRESS_DB_USER: ${DB_USER}
       WORDPRESS_DB_PASSWORD: ${PASSWORD}
       WORDPRESS_DB_NAME: ${DB_NAME}
     build: ./requirements/wordpress
-    command: docker volume create wordpress-volume
+    env_file:
+      - .env
     volumes:
       - wordpress-volume:/var/www/html
     depends_on:
       - mariadb
-
   mariadb:
      image: mariadb-image
      networks:
        - inceptions
-     container_name: mariadb-container
+     container_name: mariadb
      build: ./requirements/mariadb
+     env_file:
+       - .env
      volumes:
        - mariadb-volume:/var/lib/mysql
      environment:
