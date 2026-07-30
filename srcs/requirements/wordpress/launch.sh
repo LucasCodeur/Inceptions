@@ -30,6 +30,13 @@ until nc -z mariadb 3306; do
     sleep 2
 done
 
+wp --path=/var/www/html core install \
+--url=https://localhost \
+--title="Inception" \
+--admin_user=admin \
+--admin_password='your_password' \
+--admin_email=test@test.com \
+--allow-root
 
 chown root:root /usr/local/bin/wp
 
