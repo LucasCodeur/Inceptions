@@ -8,18 +8,13 @@ mv wp-cli.phar /usr/local/bin/wp
 chown root:root /usr/local/bin/wp
 wp --info
 
-DBNAME="$WORDPRESS_DB_NAME"
-DBUSER="$WORDPRESS_DB_USER"
-DBPASS="$WORDPRESS_DB_PASSWORD"
-DBHOST="$WORDPRESS_DB_HOST"
-
 cd /var/www/html
 
 if [ ! -f "wp-config.php" ]; then
 	echo 'Downloading WordPress'
 	wp core download --allow-root
 	echo 'Creating wp-config.php'
-	wp config create --dbname=$DBNAME --dbuser=$DBUSER --dbpass=$DBPASS --dbhost=$DBHOST --allow-root
+	wp config create --dbname="$WORDPRESS_DB_NAME" --dbuser="$WORDPRESS_DB_USER" --dbpass="$WORDPRESS_DB_PASSWORD" --dbhost="$WORDPRESS_DB_HOST" --allow-root
 	 
 else
 	echo "Wordpress already exists, skipping download"
@@ -33,11 +28,10 @@ done
 wp --path=/var/www/html core install \
 --url=https://localhost \
 --title="Inception" \
---admin_user=admin \
---admin_password='your_password' \
+--admin_user="$ADMIN_NAME" \
+--admin_password="$HOST_PASSWORD" \
 --admin_email=test@test.com \
 --allow-root
-
 chown root:root /usr/local/bin/wp
 
 echo 'Executing php-fpm'
