@@ -34,5 +34,7 @@ wp --path=/var/www/html core install \
 --allow-root
 chown root:root /usr/local/bin/wp
 
+wp user create luffy luffy@gmail.com --role=editor --user_pass=luffy --allow-root
+
 echo 'Executing php-fpm'
 exec php-fpm8.2 -F
