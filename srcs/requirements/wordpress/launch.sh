@@ -14,7 +14,8 @@ if [ ! -f "wp-config.php" ]; then
 	echo 'Downloading WordPress'
 	wp core download --allow-root
 	echo 'Creating wp-config.php'
-	wp config create --dbname="$DB_NAME" --dbuser="$DB_USER" --dbpass="$PASSWORD" --dbhost="$ADMIN_NAME" --allow-root
+	wp config create --dbname="$DB_NAME" --dbuser="$DB_USER" --dbpass="$PASSWORD" --dbhost="$MARIADB_HOST" --allow-root
+
 	echo "Waiting for MariaDB..."
 	until nc -z mariadb 3306; do
 	    sleep 2
@@ -33,7 +34,6 @@ if [ ! -f "wp-config.php" ]; then
 else
 	echo "Wordpress already exists, skipping download"
 fi
- 
 
 echo 'Executing php-fpm'
 exec php-fpm8.2 -F

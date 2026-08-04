@@ -35,12 +35,6 @@ services:
        - .env
      volumes:
        - mariadb-volume:/var/lib/mysql
-     environment:
-       MYSQL_DATABASE: ${DB_NAME}
-       MYSQL_USER: ${DB_USER}
-       MYSQL_PASSWORD: ${PASSWORD}
-       MYSQL_ROOT_PASSWORD: ${ROOT_PASS}
-
 volumes:
   mariadb-volume:
     driver: local
