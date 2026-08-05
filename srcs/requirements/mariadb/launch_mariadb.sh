@@ -1,9 +1,10 @@
 #!/bin/sh
 
 service mariadb start
-
+DBPASSWORD=$(head -n 1 $DB_PASSWORD)
+echo "dbpassword: $DBPASSWORD"
 mariadb -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"
-mariadb -e "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$PASSWORD';"
+mariadb -e "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DBPASSWORD';"
 mariadb -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%';"
 mariadb -e "FLUSH PRIVILEGES;"
 

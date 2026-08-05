@@ -10,22 +10,29 @@ wp --info
 
 cd /var/www/html
 
+DBPASS=$(head -n 1 "$WORDPRESS_DB_PASSWORD")
+
+echo "dbpass: $DBPASS"
+
 if [ ! -f "wp-config.php" ]; then
 	echo 'Downloading WordPress'
 	wp core download --allow-root
 	echo 'Creating wp-config.php'
-	wp config create --dbname="$DB_NAME" --dbuser="$DB_USER" --dbpass="$PASSWORD" --dbhost="$MARIADB_HOST" --allow-root
+	wp config create --dbname="$DB_NAME" --dbuser="$DB_USER" --dbpass="$DBPASS" --dbhost="$MARIADB_HOST" --allow-root
 
 	echo "Waiting for MariaDB..."
 	until nc -z mariadb 3306; do
 	    sleep 2
 	done
 
+ADMINPASS=$(head -n 1 "$ADMIN_PASSWORD")
+echo "adminpass: $ADMINPASS"
+
 	wp --path=/var/www/html core install \
 	--url=https://localhost \
 	--title="Inception" \
 	--admin_user="$ADMIN_NAME" \
-	--admin_password="$HOST_PASSWORD" \
+	--admin_password="$ADMINPASS"\
 	--admin_email=test@test.com \
 	--allow-root
 	chown root:root /usr/local/bin/wp

@@ -17,8 +17,14 @@ services:
     restart: always
     networks:
       - inceptions
+    secrets:
+      - secret_password_user
+      - secret_password_admin
     container_name: wordpress
     build: ./requirements/wordpress
+    environment:
+      WORDPRESS_DB_PASSWORD: /run/secrets/secret_password_user
+      ADMIN_PASSWORD: /run/secrets/secret_password_admin
     env_file:
       - .env
     volumes:
@@ -29,12 +35,16 @@ services:
      restart: always
      networks:
        - inceptions
+     secrets:
+       - secret_password_user
      container_name: mariadb
      build: ./requirements/mariadb
      env_file:
        - .env
      volumes:
        - mariadb-volume:/var/lib/mysql
+     environment:
+       DB_PASSWORD: /run/secrets/secret_password_user
 volumes:
   mariadb-volume:
     driver: local
@@ -48,6 +58,10 @@ volumes:
       type: none
       o: bind
       device: /home/lud-adam/data/wordpress-volume
-
 networks:
   inceptions:
+secrets:
+  secret_password_user:
+    file: /home/lud-adam/inceptions/secrets/password_user.txt
+  secret_password_admin:
+    file: /home/lud-adam/inceptions/secrets/password_admin.txt  

@@ -17,6 +17,6 @@ COPY launch.sh launch.sh
 
 RUN chmod 777 launch.sh
 
-EXPOSE 80 443
+EXPOSE 443
 
 ENTRYPOINT ["./launch.sh"]
