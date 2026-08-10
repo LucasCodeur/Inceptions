@@ -10,9 +10,6 @@ services:
     secrets:
       - secret_certificat_key
       - secret_certificat_crt
-    environment:
-      SERVER_KEY_PATH: /run/secrets/secret_certificat_key
-      SERVER_CRT_PATH: /run/secrets/secret_certificat_crt
     env_file:
       - .env
     volumes:
