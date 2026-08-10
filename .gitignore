@@ -4,5 +4,7 @@
 *.profile
 *.sudo_as_admin_successful
 *.gitconfig
-.local/
-.ssh/
+*.local/
+*.ssh/
+*.env
+*.secrets/
