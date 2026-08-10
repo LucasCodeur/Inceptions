@@ -20,11 +20,6 @@ if [ ! -f "wp-config.php" ]; then
 	echo 'Creating wp-config.php'
 	wp config create --dbname="$DB_NAME" --dbuser="$DB_USER" --dbpass="$DBPASS" --dbhost="$MARIADB_HOST" --allow-root
 
-	echo "Waiting for MariaDB..."
-	until nc -z mariadb 3306; do
-	    sleep 2
-	done
-
 ADMINPASS=$(head -n 1 "$ADMIN_PASSWORD")
 echo "adminpass: $ADMINPASS"
 

@@ -16,6 +16,7 @@ services:
       - wordpress-volume:/var/www/html
     depends_on:
       - wordpress
+
   wordpress:
     restart: always
     networks:
@@ -40,6 +41,11 @@ services:
        - inceptions
      secrets:
        - secret_password_user
+     healthcheck:
+       test: mariadb -e "USE wordpress;"
+       interval: 3s
+       timeout: 1s
+       retries: 5
      container_name: mariadb
      build: ./requirements/mariadb
      env_file:
