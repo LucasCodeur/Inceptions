@@ -7,6 +7,12 @@ services:
     ports:
       - "443:443"
     build: ./requirements/nginx 
+    secrets:
+      - secret_certificat_key
+      - secret_certificat_crt
+    environment:
+      SERVER_KEY_PATH: /run/secrets/secret_certificat_key
+      SERVER_CRT_PATH: /run/secrets/secret_certificat_crt
     env_file:
       - .env
     volumes:
@@ -65,3 +71,7 @@ secrets:
     file: /home/lud-adam/inceptions/secrets/password_user.txt
   secret_password_admin:
     file: /home/lud-adam/inceptions/secrets/password_admin.txt  
+  secret_certificat_key:
+    file: /home/lud-adam/inceptions/secrets/tls/server.key
+  secret_certificat_crt:
+    file: /home/lud-adam/inceptions/secrets/tls/server.crt
