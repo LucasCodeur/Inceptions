@@ -35,6 +35,7 @@ services:
       - wordpress-volume:/var/www/html
     depends_on:
       - mariadb
+
   mariadb:
      restart: always
      networks:
@@ -54,6 +55,7 @@ services:
        - mariadb-volume:/var/lib/mysql
      environment:
        DB_PASSWORD: /run/secrets/secret_password_user
+
 volumes:
   mariadb-volume:
     driver: local

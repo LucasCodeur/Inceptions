@@ -5,7 +5,6 @@ apt install -y iproute2
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar 
 chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
-chown root:root /usr/local/bin/wp
 wp --info
 
 cd /var/www/html
@@ -30,7 +29,6 @@ echo "adminpass: $ADMINPASS"
 	--admin_password="$ADMINPASS"\
 	--admin_email=test@test.com \
 	--allow-root
-	chown root:root /usr/local/bin/wp
 
 	wp user create luffy luffy@gmail.com --role=editor --user_pass=luffy --allow-root
 else

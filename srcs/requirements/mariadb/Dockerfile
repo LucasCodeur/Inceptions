@@ -2,8 +2,7 @@ FROM debian:bookworm-slim
 
 RUN	apt update && \
 	apt upgrade -y && \
-	apt install -y mariadb-server && \
-	rm -fr /var/lib/apt/lists/*
+	apt install -y mariadb-server
 
 COPY conf/custom.cnf /etc/mysql/mariadb.conf.d/custom.cnf
 COPY launch_mariadb.sh launch_mariadb.sh
