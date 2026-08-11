@@ -19,6 +19,7 @@ armageddon: removecontainers
 	docker system prune --all --volumes
 
 removefolder:
+	docker compose -f $(FOLDER)/docker-compose.yml down -v
 	sudo rm -fr /home/lud-adam/data
 	sudo mkdir /home/lud-adam/data
 	sudo mkdir /home/lud-adam/data/wordpress-volume

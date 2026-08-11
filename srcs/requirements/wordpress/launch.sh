@@ -1,26 +1,21 @@
 #!/bin/bash
 
-set -e
-apt install -y iproute2
-curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar 
-chmod +x wp-cli.phar
-mv wp-cli.phar /usr/local/bin/wp
-wp --info
-
 cd /var/www/html
 
-DBPASS=$(head -n 1 "$WORDPRESS_DB_PASSWORD")
-
-echo "dbpass: $DBPASS"
-
 if [ ! -f "wp-config.php" ]; then
+	DBPASS=$(head -n 1 "$WORDPRESS_DB_PASSWORD")
+	set -e
+	apt install -y iproute2
+	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar 
+	chmod +x wp-cli.phar
+	mv wp-cli.phar /usr/local/bin/wp
+	wp --info
 	echo 'Downloading WordPress'
 	wp core download --allow-root
 	echo 'Creating wp-config.php'
 	wp config create --dbname="$DB_NAME" --dbuser="$DB_USER" --dbpass="$DBPASS" --dbhost="$MARIADB_HOST" --allow-root
 
-ADMINPASS=$(head -n 1 "$ADMIN_PASSWORD")
-echo "adminpass: $ADMINPASS"
+	ADMINPASS=$(head -n 1 "$ADMIN_PASSWORD")
 
 	wp --path=/var/www/html core install \
 	--url=https://localhost \
